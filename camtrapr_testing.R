@@ -1,0 +1,8 @@
+#AYESHA HARGEY
+#3650393
+#8TH OCTOBER 2019
+#CAMTRAPR TESTING
+
+#LIBRARIES
+library(tidyverse)
+library(camtrapR)
