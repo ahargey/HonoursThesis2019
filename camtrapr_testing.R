@@ -97,4 +97,74 @@ records$DateTimeOriginal <- strptime(paste(records$Date, records$Time, sep = " "
 records$DateTimeOriginal <- strptime(paste(records$Date, records$Time, sep = " "), format = "%d-%b-%y %H:%M")
 data(camtraps)
 
-recordTable(inDir  = records)
+test <- recordTable(inDir  = records,
+                   IDfrom = "directory")
+
+library(readr)
+NPR2_2_Test <- read_csv("NPR2-2_Test.csv", 
+                          +     col_types = cols(Animal = col_skip(), 
+                                                 +         DeleteFlag = col_skip(), FalseTrigger = col_skip(), 
+                                                 +         ImageQuality = col_skip(), Temperature = col_skip(), 
+                                                 +         Water = col_skip(), Weather = col_skip()))
+View(NPR2_2_Test)
+
+NPR2_2_Test$DateTimeOriginal <- strptime(paste(NPR2_2_Test$Date, NPR2_2_Test$Time, sep = " "), format = "%d-%b-%y %H:%M")
+
+test <- recordTable(inDir  = NPR2_2_Test,
+                    IDfrom = "directory")
+
+data(camtraps)
+species1activity <- "Porcupine"
+
+activityDensity(recordTable = NPR2_2_Test,
+                species     = species1activity)
+
+activityHistogram (recordTable = NPR2_2_Test,
+                   species     = species1activity)
+
+records <- read.csv("C:/Users/PC/Documents/HonoursThesis2019/NPR2-2_Test.csv",
+                    stringsAsFactors = FALSE)
+
+# create DateTimeOrginal column in proper format
+records$DateTimeOriginal <- strptime(paste(records$Date, records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
+
+strptime(paste(as.Date(records$Date, format = "%m/%d/%y"), 
+                                           records$Time), format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+
+species1activity <- "Jackal"
+species2activity <- "Eland"
+species3activity <- "Baboon"
+activityHistogram (recordTable = records,
+                   species     = species1activity)
+
+activityDensity(recordTable = records,
+                species     = species1activity)
+
+activityHistogram (recordTable = records,
+                   species     = species3activity)
+
+activityDensity(recordTable = records,
+                species     = species3activity)
+
+activityRadial(recordTable  = records,
+               species      = species1activity,
+               lwd          = 3       # adjust line with of the plot
+)
+
+activityOverlap (recordTable = records,
+                 speciesA    = species1activity,
+                 speciesB    = species3activity,
+                 writePNG    = FALSE,
+                 plotR       = TRUE,
+                 createDir   = FALSE,
+                 pngMaxPix   = 1000,
+                 linecol     = c("black", "blue"),
+                 linewidth   = c(5,3),
+                 linetype    = c(1, 2),
+                 olapcol     = "darkgrey",
+                 add.rug     = TRUE,
+                 extend      = "lightgrey",
+                 ylim        = c(0, 0.25),
+                 main        = paste("Activity overlap"))
+
+                 
