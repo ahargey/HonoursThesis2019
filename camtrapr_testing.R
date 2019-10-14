@@ -165,6 +165,6 @@ activityOverlap (recordTable = records,
                  add.rug     = TRUE,
                  extend      = "lightgrey",
                  ylim        = c(0, 0.25),
-                 main        = paste("Activity overlap"))
+                 main        = paste("Activity overlap of jackals ad"))
 
                  
