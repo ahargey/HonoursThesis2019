@@ -167,4 +167,70 @@ activityOverlap (recordTable = records,
                  ylim        = c(0, 0.25),
                  main        = paste("Activity overlap of jackals ad"))
 
-                 
+data(camtraps)
+write.csv(camtraps,"stationtable.csv")                 
+
+records <- read.csv("C:/.../camtrapR_example.csv",
+                    stringsAsFactors = FALSE)
+
+records_temporal_test <- records
+
+# create DateTimeOrginal column in proper format
+records$DateTimeOriginal <- strptime(paste(as.Date(records$Date, format = "%m/%d/%y"), 
+                                           records$Time), format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+
+# assign a species 
+records_temporal_test$Species <- "jackal"
+
+# 
+records_filter1_min <- assessTemporalIndependence(intable = records_temporal_test,
+                                                  deltaTimeComparedTo = "lastIndependentRecord",
+                                                  columnOfInterest = "Species",
+                                                  stationCol = "Camera.Trap.name",
+                                                  cameraCol = "Camera.Serial.Number",
+                                                  camerasIndependent = FALSE,
+                                                  minDeltaTime = 1
+)
+
+records_filter30_min <- assessTemporalIndependence(intable = records,
+                                                   deltaTimeComparedTo = "lastIndependentRecord",
+                                                   columnOfInterest = "Species",
+                                                   stationCol = "Camera.Trap.name",
+                                                   cameraCol = "Camera.Serial.Number",
+                                                   camerasIndependent = FALSE,
+                                                   minDeltaTime = 30
+)
+
+View(records)
+View(records_filter1_min)
+View(records_filter30_min)
+
+
+# assign 2 different species
+records$Species <- c(rep("lion", times = 3),
+                     rep("giraffe", times = nrow(records) - 3))
+
+records_filter30_min_2_spec <- assessTemporalIndependence(intable = records,
+                                                          deltaTimeComparedTo = "lastIndependentRecord",
+                                                          columnOfInterest = "Species",
+                                                          stationCol = "Camera.Trap.name",
+                                                          cameraCol = "Camera.Serial.Number",
+                                                          camerasIndependent = FALSE,
+                                                          minDeltaTime = 30
+)
+
+View(records_filter30_min_2_spec)
+
+
+# remove argument cameraCol, and set removeNonIndependentRecords = FALSE
+records_filter30_min_2_spec_return_all <- assessTemporalIndependence(intable = records,
+                                                                     deltaTimeComparedTo = "lastIndependentRecord",
+                                                                     columnOfInterest = "Species",
+                                                                     stationCol = "Camera.Trap.name",
+                                                                     #  cameraCol = "Camera.Serial.Number",
+                                                                     camerasIndependent = FALSE,
+                                                                     minDeltaTime = 30,
+                                                                     removeNonIndependentRecords = FALSE
+)
+
+View(records_filter30_min_2_spec_return_all)
