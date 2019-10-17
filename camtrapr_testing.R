@@ -10,6 +10,8 @@ library(camtrapR)
 wd_images_ID <- system.file("pictures/sample_images", package = "camtrapR")
 data(recordTableSample)
 
+records <- NPR2_2_Test
+
 # load record table
 data(recordTableSample)
 view(recordTableSample)
@@ -234,3 +236,11 @@ records_filter30_min_2_spec_return_all <- assessTemporalIndependence(intable = r
 )
 
 View(records_filter30_min_2_spec_return_all)
+
+library(iNEXT)
+sac <- read.csv("Datasets/Animals/SAC_Aggregation_CSV.csv")
+sac <- sac[-1,]
+
+data(ant)
+str(ant)
+write.csv(ant,"ant.csv")   
