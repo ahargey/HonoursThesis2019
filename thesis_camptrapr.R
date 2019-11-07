@@ -6,6 +6,7 @@
 #LIBRARIES
 library(tidyverse)
 library(camtrapR)
+setwd('C:/Users/PC/Documents/HonoursThesis2019')
 
 #LOAD IN ACCUMULATED DATASETS
 npr1records <- read.csv("Datasets/CamtrapR/NPR1 - Aggregation.csv",
@@ -14,12 +15,14 @@ npr2records <- read.csv("Datasets/CamtrapR/NPR2 - Aggregation.csv",
                     stringsAsFactors = FALSE)
 npr3records <- read.csv("Datasets/CamtrapR/NPR3 - Aggregation.csv",
                     stringsAsFactors = FALSE)
+total       <- read.csv("Datasets/CamtrapR/Total_Overall_Record.csv",
+                 stringsAsFactors = FALSE)
 
 #create DateTimeOrginal column in proper format for camtrapR
 npr1records$DateTimeOriginal <- strptime(paste(npr1records$Date, npr1records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 npr2records$DateTimeOriginal <- strptime(paste(npr2records$Date, npr2records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 npr3records$DateTimeOriginal <- strptime(paste(npr3records$Date, npr3records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
-
+total$DateTimeOriginal       <- strptime(paste(total$Date, total$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 
 species1activity <- "Baboon"
 species2activity <- "Cattle"
@@ -69,11 +72,11 @@ as.data.frame(cameratable)
 #View(test)
 #testing with species <- read_csv("Datasets/CamtrapR/TEST_NPR1 - Aggregation.csv", 
                        #col_types = cols(Station = col_factor(levels = c("NPR1", 
-                                                                        "NPR2", "NPR3"))))
+                                                                        #"NPR2", "NPR3"))))
 as.data.frame(cameratable)
 
-Mapstest1 <- detectionMaps(CTtable     = cameratable,
-                           recordTable  = test_table,
+Mapstest1 <- detectionMaps(CTtable     = CameraStationTable,
+                           recordTable  = total,
                            Xcol         = "utm_x",
                            Ycol         = "utm_y",
                            stationCol   = "Station",
@@ -103,8 +106,40 @@ Mapstest1 <- detectionMaps(CTtable     = camtraps,
                            addLegend    = TRUE)
                            
                            
-                           # load sample camera trap station table
-                           data(camtraps)
-                           
-                           # load sample record table
-                           data(recordTableSample)
+reportTest <- surveyReport (recordTable          = total,
+                            CTtable              = CameraStationTable,
+                            speciesCol           = "Species",
+                            stationCol           = "Station",
+                            setupCol             = "Setup_date",
+                            retrievalCol         = "Retrieval_date",
+                            CTDateFormat         = "%d/%m/%Y", 
+                            recordDateTimeCol    = "DateTimeOriginal",
+                            recordDateTimeFormat = "%Y-%m-%d %H:%M:%S",
+                            CTHasProblems        = FALSE)
+
+total_baboons <- total[total$Species == "Baboon",]
+
+Mapstest2 <- detectionMaps(CTtable      = ,
+                           recordTable   = ,
+                           Xcol          = "utm_x",
+                           Ycol          = "utm_y",
+                           stationCol    = "Station",
+                           speciesCol    = "Species",
+                           speciesToShow = "Baboon",     # added
+                           printLabels   = TRUE,
+                           richnessPlot  = FALSE,     # changed
+                           speciesPlots  = TRUE,      # changed
+                           addLegend     = TRUE)
+
+Mapstest1 <- detectionMaps(CTtable      = CameraStationTable,
+                           recordTable   = total_baboons,
+                           Xcol          = "utm_x",
+                           Ycol          = "utm_y",
+                           stationCol    = "Station",
+                           speciesCol    = "Species",
+                           speciesToShow = "Baboon",     # added
+                           printLabels   = TRUE,
+                           richnessPlot  = FALSE,     # changed
+                           speciesPlots  = TRUE,      # changed
+                           addLegend     = TRUE)
+Mapstest1
