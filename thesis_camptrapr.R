@@ -17,32 +17,42 @@ npr3records <- read.csv("Datasets/CamtrapR/NPR3 - Aggregation.csv",
                     stringsAsFactors = FALSE)
 total       <- read.csv("Datasets/CamtrapR/Total_Overall_Record.csv",
                  stringsAsFactors = FALSE)
+unidentified       <- read.csv("Datasets/CamtrapR/Unidentified.csv",
+                        stringsAsFactors = FALSE)
 
 #create DateTimeOrginal column in proper format for camtrapR
 npr1records$DateTimeOriginal <- strptime(paste(npr1records$Date, npr1records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 npr2records$DateTimeOriginal <- strptime(paste(npr2records$Date, npr2records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 npr3records$DateTimeOriginal <- strptime(paste(npr3records$Date, npr3records$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 total$DateTimeOriginal       <- strptime(paste(total$Date, total$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
+unidentified$DateTimeOriginal       <- strptime(paste(unidentified$Date, unidentified$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 
-species1activity <- "Baboon"
-species2activity <- "Cattle"
-species3activity <- "Steenbok"
-species4activity <- "Jackal"
+#assigning species names
+species1activity <- "African Wild Cat"
+species2activity <- "Baboon"	
+species3activity <- "Caracal"	
+species4activity <- "Cattle"
+species5activity <- "Dog"	
+species6activity <- "Eland"	
+species7activity <- "Jackal"	
+species8activity <- "Klipspringer"	
+species9activity <- "Kudu"	
+species10activity <- "Mongoose"	
+species11activity <- "Oryx"	
+species12activity <- "Porcupine"	
+species13activity <- "Scrub Hare"	
+species14activity <- "Steenbok"
+species15activity <- "Unidentified"
 
-activityHistogram (recordTable = npr1records,
-                   species     = species1activity)
+activityHistogram (recordTable = total,
+                   species     = species13activity)
 
-activityDensity(recordTable = npr1records,
-                species     = species1activity)
-
-activityHistogram (recordTable = records,
-                   species     = species3activity)
 
 activityDensity(recordTable = records,
                 species     = species3activity)
 
 
-activityOverlap (recordTable = npr1records,
+activityOverlap (recordTable = total,
                  speciesA    = species1activity,
                  speciesB    = species3activity,
                  writePNG    = FALSE,
@@ -53,10 +63,10 @@ activityOverlap (recordTable = npr1records,
                  linewidth   = c(5,3),
                  linetype    = c(1, 2),
                  olapcol     = "darkgrey",
-                 add.rug     = TRUE,
+                 add.rug     = FALSE,
                  extend      = "lightgrey",
                  ylim        = c(0, 0.25),
-                 main        = paste("Activity overlap of jackals ad"))
+                 main        = paste("Activity overlap"))
 
 #camera table
 cameratable <- read_csv("Datasets/CamtrapR/CameraStationTable.csv")
