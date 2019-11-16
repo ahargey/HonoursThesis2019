@@ -44,8 +44,7 @@ curve_NPR2 = specaccum(NPR2, method = "exact")
 curve_NPR3 = specaccum(NPR3, method = "exact")
 
 #plot curve_all first
-plot(curve_all_sites,
-     xlab = "Months",
+plot(curve_NPR1, xlab = "Months",
      ylab = "Species (N)")
 #then plot the rest
 plot(curve_NPR1, add = TRUE, ci = 0, col="hotpink", lwd=2) #col is COLOUR setting, so change it to something else if you want

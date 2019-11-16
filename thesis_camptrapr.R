@@ -6,7 +6,8 @@
 #LIBRARIES
 library(tidyverse)
 library(camtrapR)
-setwd('C:/Users/PC/Documents/HonoursThesis2019')
+library(ggpubr)
+library(ggplot2)
 
 #LOAD IN ACCUMULATED DATASETS
 npr1records <- read.csv("Datasets/CamtrapR/NPR1 - Aggregation.csv",
@@ -28,45 +29,111 @@ total$DateTimeOriginal       <- strptime(paste(total$Date, total$Time, sep = " "
 unidentified$DateTimeOriginal       <- strptime(paste(unidentified$Date, unidentified$Time, sep = " "), format = "%d-%b-%y %H:%M", tz = "UTC")
 
 #assigning species names
-species1activity <- "African Wild Cat"
-species2activity <- "Baboon"	
-species3activity <- "Caracal"	
-species4activity <- "Cattle"
-species5activity <- "Dog"	
-species6activity <- "Eland"	
-species7activity <- "Jackal"	
-species8activity <- "Klipspringer"	
-species9activity <- "Kudu"	
-species10activity <- "Mongoose"	
-species11activity <- "Oryx"	
-species12activity <- "Porcupine"	
-species13activity <- "Scrub Hare"	
-species14activity <- "Steenbok"
-species15activity <- "Unidentified"
+species1activity <- "African Wild Cat" #2
+species2activity <- "Baboon" #30	
+species3activity <- "Caracal"	#1
+species4activity <- "Cattle" #15
+species5activity <- "Dog"	#1
+species6activity <- "Eland"	#3
+species7activity <- "Jackal" #10	
+species8activity <- "Klipspringer" #1	
+species9activity <- "Kudu"	#5
+species10activity <- "Mongoose"	#1
+species11activity <- "Oryx"	#4
+species12activity <- "Porcupine" #3	
+species13activity <- "Scrub Hare"	 #1
+species14activity <- "Steenbok" #12
+species15activity <- "Unidentified" #10
 
 activityHistogram (recordTable = total,
-                   species     = species13activity)
+                   species     = species1activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
 
+activityHistogram (recordTable = total,
+                   species     = species2activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
 
-activityDensity(recordTable = records,
-                species     = species3activity)
+activityHistogram (recordTable = total,
+                   species     = species3activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
 
+activityHistogram (recordTable = total,
+                   species     = species4activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
 
-activityOverlap (recordTable = total,
-                 speciesA    = species1activity,
-                 speciesB    = species3activity,
-                 writePNG    = FALSE,
-                 plotR       = TRUE,
-                 createDir   = FALSE,
-                 pngMaxPix   = 1000,
-                 linecol     = c("black", "blue"),
-                 linewidth   = c(5,3),
-                 linetype    = c(1, 2),
-                 olapcol     = "darkgrey",
-                 add.rug     = FALSE,
-                 extend      = "lightgrey",
-                 ylim        = c(0, 0.25),
-                 main        = paste("Activity overlap"))
+activityHistogram (recordTable = total,
+                   species     = species5activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species6activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species7activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species8activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species9activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species10activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species11activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species12activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species13activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = total,
+                   species     = species14activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
+
+activityHistogram (recordTable = unidentified,
+                   species     = species15activity,
+                   writePNG    = FALSE,
+                   createDir   = FALSE,
+                   plotDirectory = "Histograms")
 
 #camera table
 cameratable <- read_csv("Datasets/CamtrapR/CameraStationTable.csv")
